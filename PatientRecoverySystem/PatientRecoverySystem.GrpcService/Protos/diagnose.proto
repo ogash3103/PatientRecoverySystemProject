@@ -5,6 +5,7 @@ package patient;
 // Import qilamiz, shunda Monitor tiplari mavjud bo'ladi:
 import "monitor.proto";
 import "rehabilitation.proto";
+import "notification.proto";
 
 // --- Task 1: Diagnose Messages ---
 message DiagnoseRequest {
@@ -28,4 +29,8 @@ service PatientRecoveryService {
   // === Task 3: Rehabilitation RPC’lari ===
  rpc RecordRehabilitationProgress (RehabilitationProgressRequest) returns (RehabilitationProgressResponse);
  rpc GetRehabilitationHistory     (GetRehabilitationRequest)         returns (GetRehabilitationResponse);
+
+  // ... Task 4 oldingi RPC’lar ...
+  rpc GetAlerts            (GetAlertsRequest)           returns (GetAlertsResponse);
+  rpc AcknowledgeAlert     (AcknowledgeAlertRequest)    returns (AcknowledgeAlertResponse);
 }

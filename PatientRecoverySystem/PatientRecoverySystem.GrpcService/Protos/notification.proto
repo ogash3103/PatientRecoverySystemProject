@@ -1,0 +1,37 @@
+syntax = "proto3";
+option csharp_namespace = "PatientRecoverySystem.GrpcService";
+package patient;
+
+// --- Task 4: Alert / Notification messages ---
+
+// GetAlerts so‘rovi
+message GetAlertsRequest {
+  string patientId   = 1;
+  string role        = 2; // Physician|Nurse|Patient
+}
+
+// Bitta alert formati
+message AlertInfo {
+  int32    alertId       = 1;
+  string   patientId     = 2;
+  string   alertType     = 3;
+  string   message       = 4;
+  string   recipientRole = 5;
+  bool     isAcknowledged= 6;
+  string   createdAt     = 7;
+}
+
+// Yig‘ma javob
+message GetAlertsResponse {
+  repeated AlertInfo alerts = 1;
+}
+
+// Acknowledge so‘rovi
+message AcknowledgeAlertRequest {
+  int32 alertId = 1;
+}
+
+// Acknowledge javobi
+message AcknowledgeAlertResponse {
+  bool success = 1;
+}

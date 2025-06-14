@@ -1,23 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using PatientRecoverySystem.GrpcService.Data;
 using PatientRecoverySystem.GrpcService.Models;
-using PatientRecoverySystem.GrpcService;       // generated kod uchun
+using PatientRecoverySystem.GrpcService;
 
 namespace PatientRecoverySystem.GrpcService.Services
 {
-    public class PatientRecoveryServiceImpl
-        : PatientRecoveryService.PatientRecoveryServiceBase
+    public class PatientRecoveryServiceImpl : PatientRecoveryService.PatientRecoveryServiceBase
     {
         private readonly PatientRecoveryContext _context;
-        public PatientRecoveryServiceImpl(PatientRecoveryContext context)
-            => _context = context;
+        public PatientRecoveryServiceImpl(PatientRecoveryContext context) => _context = context;
 
-        // task 1 
+        // Task 1: Diagnose
         public override async Task<DiagnoseResponse> DiagnosePatient(
             DiagnoseRequest request, ServerCallContext context)
         {
-            // Bu yerga avval yozgan tashxis logikangizni joylang.
             var diagText = $"Symptoms: [{string.Join(", ", request.Symptoms)}] …";
             var actions = new List<string> { "Test A", "Test B" };
 
@@ -40,7 +41,7 @@ namespace PatientRecoverySystem.GrpcService.Services
             return response;
         }
 
-        // Task 2.1: RecordMedicalData
+        // Task 2: Monitor
         public override async Task<MedicalDataResponse> RecordMedicalData(
             MedicalDataRequest request, ServerCallContext ctx)
         {
@@ -54,19 +55,35 @@ namespace PatientRecoverySystem.GrpcService.Services
                 Timestamp = DateTime.UtcNow
             };
             _context.MedicalRecords.Add(record);
+
+            // Alert logic: high temperature
+            if (request.Temperature > 38)
+            {
+                var alert = new Alert
+                {
+                    PatientId = request.PatientId,
+                    AlertType = "HighTemperature",
+                    Message = $"High temp: {request.Temperature}°C",
+                    RecipientRole = "Physician",
+                    IsSent = false,
+                    IsAcknowledged = false,
+                    CreatedAt = DateTime.UtcNow
+                };
+                _context.Alerts.Add(alert);
+            }
+
             await _context.SaveChangesAsync();
             return new MedicalDataResponse { Success = true };
         }
 
-        // Task 2.2: GetMedicalData
         public override async Task<GetMedicalDataResponse> GetMedicalData(
             GetMedicalDataRequest request, ServerCallContext ctx)
         {
             var resp = new GetMedicalDataResponse();
             var list = await _context.MedicalRecords
-                             .Where(r => r.PatientId == request.PatientId)
-                             .OrderByDescending(r => r.Timestamp)
-                             .ToListAsync();
+                .Where(r => r.PatientId == request.PatientId)
+                .OrderByDescending(r => r.Timestamp)
+                .ToListAsync();
 
             foreach (var r in list)
             {
@@ -81,11 +98,10 @@ namespace PatientRecoverySystem.GrpcService.Services
                     Timestamp = r.Timestamp.ToString("o")
                 });
             }
-
             return resp;
         }
 
-// === Task 3.1: RecordRehabilitationProgress ===
+        // Task 3: Rehabilitation
         public override async Task<RehabilitationProgressResponse> RecordRehabilitationProgress(
             RehabilitationProgressRequest request, ServerCallContext ctx)
         {
@@ -94,7 +110,7 @@ namespace PatientRecoverySystem.GrpcService.Services
                 PatientId = request.PatientId,
                 Exercises = string.Join("||", request.Exercises),
                 PainLevel = request.PainLevel,
-                Notes     = request.Notes,
+                Notes = request.Notes,
                 Timestamp = DateTime.UtcNow
             };
             _context.RehabilitationSessions.Add(session);
@@ -102,29 +118,68 @@ namespace PatientRecoverySystem.GrpcService.Services
             return new RehabilitationProgressResponse { Success = true };
         }
 
-        // === Task 3.2: GetRehabilitationHistory ===
         public override async Task<GetRehabilitationResponse> GetRehabilitationHistory(
             GetRehabilitationRequest request, ServerCallContext ctx)
         {
             var resp = new GetRehabilitationResponse();
             var list = await _context.RehabilitationSessions
-                             .Where(r => r.PatientId == request.PatientId)
-                             .OrderByDescending(r => r.Timestamp)
-                             .ToListAsync();
+                .Where(r => r.PatientId == request.PatientId)
+                .OrderByDescending(r => r.Timestamp)
+                .ToListAsync();
 
             foreach (var r in list)
             {
-                resp.Sessions.Add(new RehabilitationSessionInfo {
+                var info = new RehabilitationSessionInfo
+                {
                     SessionId = r.RehabilitationSessionId,
                     PatientId = r.PatientId,
-                    Exercises = { r.Exercises.Split("||") },
                     PainLevel = r.PainLevel,
-                    Notes     = r.Notes,
+                    Notes = r.Notes,
                     Timestamp = r.Timestamp.ToString("o")
+                };
+                info.Exercises.AddRange(r.Exercises.Split("||"));
+                resp.Sessions.Add(info);
+            }
+            return resp;
+        }
+
+        // Task 4: Alerts
+        public override async Task<GetAlertsResponse> GetAlerts(
+            GetAlertsRequest request, ServerCallContext ctx)
+        {
+            var resp = new GetAlertsResponse();
+            var list = await _context.Alerts
+                .Where(a => a.PatientId == request.PatientId && a.RecipientRole == request.Role)
+                .OrderByDescending(a => a.CreatedAt)
+                .ToListAsync();
+
+            foreach (var a in list)
+            {
+                resp.Alerts.Add(new AlertInfo
+                {
+                    AlertId = a.AlertId,
+                    PatientId = a.PatientId,
+                    AlertType = a.AlertType,
+                    Message = a.Message,
+                    RecipientRole = a.RecipientRole,
+                    IsAcknowledged = a.IsAcknowledged,
+                    CreatedAt = a.CreatedAt.ToString("o")
                 });
             }
             return resp;
         }
 
+        public override async Task<AcknowledgeAlertResponse> AcknowledgeAlert(
+            AcknowledgeAlertRequest request, ServerCallContext ctx)
+        {
+            var alert = await _context.Alerts.FindAsync(request.AlertId);
+            if (alert == null)
+                return new AcknowledgeAlertResponse { Success = false };
+
+            alert.IsAcknowledged = true;
+            alert.AckAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return new AcknowledgeAlertResponse { Success = true };
+        }
     }
 }

@@ -68,6 +68,14 @@ namespace PatientRecoverySystem.GrpcService {
     static readonly grpc::Marshaller<global::PatientRecoverySystem.GrpcService.GetRehabilitationRequest> __Marshaller_patient_GetRehabilitationRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PatientRecoverySystem.GrpcService.GetRehabilitationRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::PatientRecoverySystem.GrpcService.GetRehabilitationResponse> __Marshaller_patient_GetRehabilitationResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PatientRecoverySystem.GrpcService.GetRehabilitationResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::PatientRecoverySystem.GrpcService.GetAlertsRequest> __Marshaller_patient_GetAlertsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PatientRecoverySystem.GrpcService.GetAlertsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::PatientRecoverySystem.GrpcService.GetAlertsResponse> __Marshaller_patient_GetAlertsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PatientRecoverySystem.GrpcService.GetAlertsResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::PatientRecoverySystem.GrpcService.AcknowledgeAlertRequest> __Marshaller_patient_AcknowledgeAlertRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PatientRecoverySystem.GrpcService.AcknowledgeAlertRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::PatientRecoverySystem.GrpcService.AcknowledgeAlertResponse> __Marshaller_patient_AcknowledgeAlertResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::PatientRecoverySystem.GrpcService.AcknowledgeAlertResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::PatientRecoverySystem.GrpcService.DiagnoseRequest, global::PatientRecoverySystem.GrpcService.DiagnoseResponse> __Method_DiagnosePatient = new grpc::Method<global::PatientRecoverySystem.GrpcService.DiagnoseRequest, global::PatientRecoverySystem.GrpcService.DiagnoseResponse>(
@@ -108,6 +116,22 @@ namespace PatientRecoverySystem.GrpcService {
         "GetRehabilitationHistory",
         __Marshaller_patient_GetRehabilitationRequest,
         __Marshaller_patient_GetRehabilitationResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::PatientRecoverySystem.GrpcService.GetAlertsRequest, global::PatientRecoverySystem.GrpcService.GetAlertsResponse> __Method_GetAlerts = new grpc::Method<global::PatientRecoverySystem.GrpcService.GetAlertsRequest, global::PatientRecoverySystem.GrpcService.GetAlertsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetAlerts",
+        __Marshaller_patient_GetAlertsRequest,
+        __Marshaller_patient_GetAlertsResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::PatientRecoverySystem.GrpcService.AcknowledgeAlertRequest, global::PatientRecoverySystem.GrpcService.AcknowledgeAlertResponse> __Method_AcknowledgeAlert = new grpc::Method<global::PatientRecoverySystem.GrpcService.AcknowledgeAlertRequest, global::PatientRecoverySystem.GrpcService.AcknowledgeAlertResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "AcknowledgeAlert",
+        __Marshaller_patient_AcknowledgeAlertRequest,
+        __Marshaller_patient_AcknowledgeAlertResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -161,6 +185,24 @@ namespace PatientRecoverySystem.GrpcService {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// ... Task 4 oldingi RPC’lar ...
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::PatientRecoverySystem.GrpcService.GetAlertsResponse> GetAlerts(global::PatientRecoverySystem.GrpcService.GetAlertsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::PatientRecoverySystem.GrpcService.AcknowledgeAlertResponse> AcknowledgeAlert(global::PatientRecoverySystem.GrpcService.AcknowledgeAlertRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
@@ -173,7 +215,9 @@ namespace PatientRecoverySystem.GrpcService {
           .AddMethod(__Method_RecordMedicalData, serviceImpl.RecordMedicalData)
           .AddMethod(__Method_GetMedicalData, serviceImpl.GetMedicalData)
           .AddMethod(__Method_RecordRehabilitationProgress, serviceImpl.RecordRehabilitationProgress)
-          .AddMethod(__Method_GetRehabilitationHistory, serviceImpl.GetRehabilitationHistory).Build();
+          .AddMethod(__Method_GetRehabilitationHistory, serviceImpl.GetRehabilitationHistory)
+          .AddMethod(__Method_GetAlerts, serviceImpl.GetAlerts)
+          .AddMethod(__Method_AcknowledgeAlert, serviceImpl.AcknowledgeAlert).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -188,6 +232,8 @@ namespace PatientRecoverySystem.GrpcService {
       serviceBinder.AddMethod(__Method_GetMedicalData, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PatientRecoverySystem.GrpcService.GetMedicalDataRequest, global::PatientRecoverySystem.GrpcService.GetMedicalDataResponse>(serviceImpl.GetMedicalData));
       serviceBinder.AddMethod(__Method_RecordRehabilitationProgress, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PatientRecoverySystem.GrpcService.RehabilitationProgressRequest, global::PatientRecoverySystem.GrpcService.RehabilitationProgressResponse>(serviceImpl.RecordRehabilitationProgress));
       serviceBinder.AddMethod(__Method_GetRehabilitationHistory, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PatientRecoverySystem.GrpcService.GetRehabilitationRequest, global::PatientRecoverySystem.GrpcService.GetRehabilitationResponse>(serviceImpl.GetRehabilitationHistory));
+      serviceBinder.AddMethod(__Method_GetAlerts, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PatientRecoverySystem.GrpcService.GetAlertsRequest, global::PatientRecoverySystem.GrpcService.GetAlertsResponse>(serviceImpl.GetAlerts));
+      serviceBinder.AddMethod(__Method_AcknowledgeAlert, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PatientRecoverySystem.GrpcService.AcknowledgeAlertRequest, global::PatientRecoverySystem.GrpcService.AcknowledgeAlertResponse>(serviceImpl.AcknowledgeAlert));
     }
 
   }

@@ -10,7 +10,8 @@ namespace PatientRecoverySystem.GrpcService.Data
 
         public DbSet<Diagnosis> Diagnoses { get; set; }
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
-        public DbSet<RehabilitationSession> RehabilitationSessions   { get; set; }
+        public DbSet<RehabilitationSession> RehabilitationSessions { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
 
     }
 }
