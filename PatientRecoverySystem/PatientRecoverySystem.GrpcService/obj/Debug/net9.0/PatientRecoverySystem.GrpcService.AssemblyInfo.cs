@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PatientRecoverySystem.GrpcService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+501fa6f1c8fa612cf1f984931ca1d6543f28e5ad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c18d3f7579b8689b317477554f2b9cffb57b9b8")]
 [assembly: System.Reflection.AssemblyProductAttribute("PatientRecoverySystem.GrpcService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PatientRecoverySystem.GrpcService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

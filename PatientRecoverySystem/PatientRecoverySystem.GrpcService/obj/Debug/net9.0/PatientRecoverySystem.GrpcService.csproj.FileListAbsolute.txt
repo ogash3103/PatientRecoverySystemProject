@@ -16,6 +16,8 @@ C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecover
 C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Grpc.Net.ClientFactory.dll
 C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Grpc.Net.Common.dll
 C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Humanizer.dll
+C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Microsoft.Data.SqlClient.dll
 C:\Users\faxog\PatientRecoverySystemProject\PatientRecoverySystem\PatientRecoverySystem.GrpcService\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
