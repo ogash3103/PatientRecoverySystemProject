@@ -1,0 +1,38 @@
+syntax = "proto3";
+option csharp_namespace = "PatientRecoverySystem.GrpcService";
+package patient;
+
+// --- Task 3: Rehabilitation Messages ---
+
+// 1) Reabilitatsiya progressini yozish
+message RehabilitationProgressRequest {
+  string   patientId    = 1;          // Bemor ID
+  repeated string exercises   = 2;    // Bajarilgan mashqlar ro'yxati
+  int32    painLevel     = 3;         // Og'riq darajasi (1–10)
+  string   notes         = 4;         // Qoʻshimcha eslatmalar
+}
+
+// Javob: saqlash muvaffaqiyatli bo‘ldimi?
+message RehabilitationProgressResponse {
+  bool success = 1;
+}
+
+// 2) Bemorning reabilitatsiya tarixini olish
+message GetRehabilitationRequest {
+  string patientId = 1;               // Bemor ID
+}
+
+// Har bir seans formati
+message RehabilitationSessionInfo {
+  int32    sessionId   = 1;           // PK
+  string   patientId   = 2;
+  repeated string exercises = 3;
+  int32    painLevel   = 4;
+  string   notes       = 5;
+  string   timestamp   = 6;           // ISO format
+}
+
+// Yig‘ma javob
+message GetRehabilitationResponse {
+  repeated RehabilitationSessionInfo sessions = 1;
+}

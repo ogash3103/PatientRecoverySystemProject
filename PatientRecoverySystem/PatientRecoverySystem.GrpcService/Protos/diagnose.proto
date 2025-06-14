@@ -1,0 +1,31 @@
+syntax = "proto3";
+option csharp_namespace = "PatientRecoverySystem.GrpcService";
+package patient;
+
+// Import qilamiz, shunda Monitor tiplari mavjud bo'ladi:
+import "monitor.proto";
+import "rehabilitation.proto";
+
+// --- Task 1: Diagnose Messages ---
+message DiagnoseRequest {
+  string patientId        = 1;
+  repeated string symptoms = 2;
+}
+message DiagnoseResponse {
+  string diagnosis        = 1;
+  repeated string actions = 2;
+  string timestamp        = 3;
+}
+
+// **Barcha RPC’lar bitta service ichida**:
+service PatientRecoveryService {
+  rpc DiagnosePatient    (DiagnoseRequest)        returns (DiagnoseResponse);
+
+  // Task 2 RPC’lari (Monitor)
+  rpc RecordMedicalData  (MedicalDataRequest)     returns (MedicalDataResponse);
+  rpc GetMedicalData     (GetMedicalDataRequest)  returns (GetMedicalDataResponse);
+
+  // === Task 3: Rehabilitation RPC’lari ===
+ rpc RecordRehabilitationProgress (RehabilitationProgressRequest) returns (RehabilitationProgressResponse);
+ rpc GetRehabilitationHistory     (GetRehabilitationRequest)         returns (GetRehabilitationResponse);
+}

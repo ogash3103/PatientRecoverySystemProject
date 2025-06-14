@@ -1,0 +1,4 @@
+obj\Debug\net9.0/Diagnose.cs \
+obj\Debug\net9.0/DiagnoseGrpc.cs: Protos/monitor.proto\
+ Protos/rehabilitation.proto\
+ Protos/diagnose.proto
